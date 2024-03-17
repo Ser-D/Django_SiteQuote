@@ -4,6 +4,9 @@
 
 <div class="row">
     <div class="col-md-8">
+        <span>all quotes per tag: <small class="author" itemprop="author">{{quote.author.fullname}}</small>
+            <a href="/author/{{quote.author.id}}">{{tag}}</a>
+        </span>
         {% for quote in quotes %}
 
         <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
@@ -15,9 +18,9 @@
             </span>
             <div class="tags">
                 Tags:
-                {% for tag in quote.tags.all %}
+                {% for tag_ in quote.tags.all %}
 
-                <a class="tag" href="/tag/{{tag}} ">{{tag}}</a>
+                <a class="tag" href="/tag/{{tag_}}">{{tag_}}</a>
                 {% endfor%}
 
 
@@ -30,7 +33,7 @@
 
             <li class="previous">
                 <a class="{% if not quotes.has_previous %} disable {% endif %}"
-                        href="{% if quotes.has_previous %} {% url 'quotes:root_paginate' quotes.previous_page_number %} {% else %} # {% endif %}">
+                        href="{% if quotes.has_previous %} {% url 'quotes:tag_info' quotes.previous_page_number %} {% else %} # {% endif %}">
                     <span aria-hidden="true">←</span> Previous
                 </a>
             </li>
@@ -38,7 +41,7 @@
 
             <li class="next">
                 <a class="{% if not quotes.has_next %} disable {% endif %}"
-                        href="{% if quotes.has_next %} {% url 'quotes:root_paginate' quotes.next_page_number %} {% else %} # {% endif %}">
+                        href="{% if quotes.has_next %} {% url 'quotes:tag_info' quotes.next_page_number %} {% else %} # {% endif %}">
                 Next <span aria-hidden="true">→</span></a>
             </li>
 
@@ -49,3 +52,4 @@
 </div>
 
 {% endblock %}
+

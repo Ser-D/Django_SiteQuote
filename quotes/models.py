@@ -1,19 +1,29 @@
 from django.db import models
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=25, null=False, unique=True)
+class Author(models.Model):
+    fullname = models.CharField(max_length=50, unique=True)
+    born_date = models.CharField(max_length=50)
+    born_location = models.CharField(max_length=150)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'self.name'
+        return self.fullname
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, null=False, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Quote(models.Model):
-    name = models.CharField(max_length=25)
-    description = models.CharField(max_length=510, null=False)
-    done = models.BooleanField(default=False)
-    create = models.DateTimeField(auto_now_add=True)
+    quote = models.TextField()
     tags = models.ManyToManyField(Tag)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, default=None, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name}|{self.done}"
+        return self.quote
